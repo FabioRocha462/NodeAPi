@@ -1,0 +1,43 @@
+//sabendo quantas licitações naquele dia e entrando na condição caso tenha 1 ou mais de uma
+    if ((Object.keys(dados.licitacoes).length) >=1){
+        dadosDasLicitacoes = dados.licitacoes;
+        var size_licitacao = (Object.keys(dados.licitacoes).length);
+        console.log(size_licitacao)
+        for(let i =0; i < size_licitacao;i++){
+        var size_dates = (Object.keys(dadosDasLicitacoes[i].datas['Outras Datas']).length);
+        if (size_dates >=1){
+            const date_licitacao = dadosDasLicitacoes[i].datas['Outras Datas'];
+            //var licitacaoId = postLiciti(licitacao[i].orgao,licitacao[i].titulo,licitacao[i].estado,licitacao[i].cidade,licitacao[i].objeto);
+            for(let j= 0;j<size_dates;j++){
+                var dataenv = validade(dados[i].datas['Outras Datas'][j].data);
+                var data_fonte = dados[i].datas['Outras Datas'][j].data_fonte;
+                if(typeof(data_fonte) != 'undefined'){
+                    //postDatas(dataenv,data_fonte,licitacaoId);
+                }
+                else{
+                    data_fonte = null;
+                    //postDatas(dataenv,data_fonte,licitacaoId);
+                }
+
+            }
+        }
+        }
+    }else{
+        console.log(licitacao)
+    }
+    ---------------------------------------------------------------------------------------------------------
+
+    async function postLiciti(orgao, titulo, estado, Cidade, objeto) {
+    const todo = { "orgao": orgao, "titulo": titulo, "estado": estado, "Cidade": Cidade, "objeto": objeto };
+    const id = await axios.post('http://127.0.0.1:3333/licitacao', todo);
+    return id;
+    
+}
+
+async function postDatas(data, data_fonte, licitacaoId) {
+    const todo = { 'data': data, 'data_fonte': data_fonte, 'licitacaoId': licitacaoId };
+    await axios.post('http://127.0.0.1:3333/datas', todo);
+    console.log('ok')
+
+
+}
